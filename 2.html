@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>jQuery抽奖效果</title>
+    <style type="text/css">
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        body {
+            font-size: 12px;
+        }
+        
+        ul,
+        li {
+            list-style: none;
+        }
+        
+        .choudiv {
+            width: 600px;
+            margin: 100px auto;
+            position: relative;
+        }
+        
+        .choudiv .zblock {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #09C;
+            text-align: center;
+            line-height: 80px;
+        }
+        
+        .choudiv .li1 {
+            left: 0px;
+            top: 0px;
+        }
+        
+        .choudiv .li2 {
+            left: 80px;
+            top: 0px;
+        }
+        
+        .choudiv .li3 {
+            left: 160px;
+            top: 0px;
+        }
+        
+        .choudiv .li4 {
+            left: 240px;
+            top: 0px;
+        }
+        
+        .choudiv .li5 {
+            left: 320px;
+            top: 0px;
+        }
+        
+        .choudiv .li6 {
+            left: 320px;
+            top: 80px;
+        }
+        
+        .choudiv .li7 {
+            left: 320px;
+            top: 160px;
+        }
+        
+        .choudiv .li8 {
+            left: 240px;
+            top: 160px;
+        }
+        
+        .choudiv .li9 {
+            left: 160px;
+            top: 160px;
+        }
+        
+        .choudiv .li10 {
+            left: 80px;
+            top: 160px;
+        }
+        
+        .choudiv .li11 {
+            left: 0px;
+            top: 160px;
+        }
+        
+        .choudiv .li12 {
+            left: 0px;
+            top: 80px;
+        }
+        
+        .choudiv .zblock1 {
+            width: 240px;
+            height: 80px;
+            cursor: pointer;
+            background: #f00;
+            position: absolute;
+            left: 80px;
+            top: 80px;
+            text-align: center;
+            line-height: 80px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <!-- <script type="text/javascript" src="jquery-1.7.1.min.js"></script> -->
+    <script type="text/javascript">
+        $(function() {
+            $(".zblock1").on("click", function() {
+                if (!$(this).hasClass("unuse")) {
+                    $(this).addClass("unuse");
+                    var i = 0;
+                    var num = parseInt(30 + Math.random() * 20);
+                    //这个后面会通过AJAX由程序给出
+                    var time = 50;
+                    var j = parseInt(num / 12);
+                    var leave = num % 12;
+                    var oli = $("#outer").find("li");
+                    var timer = setInterval(function() {
+                        oli.css("opacity", "1");
+                        if (j > 0) {
+                            if (i == 12) {
+                                i = 0;
+                                j--;
+                                oli.eq(i).css("opacity", "0.5");
+                            } else {
+                                oli.eq(i).css("opacity", "0.5");
+                                i++;
+                            }
+                        } else {
+                            if (i == leave) {
+                                clearInterval(timer);
+                                oli.eq(i).css("opacity", "0.5");
+                                alert("抽中了" + i + "号");
+                                $(".zblock1").removeClass("unuse");
+                            } else {
+                                oli.eq(i).css("opacity", "0.5");
+                                i++;
+                            }
+                        }
+                    }, 50);
+                } else {
+                    return false;
+                }
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <!-- http://www.cnblogs.com/Renyi-Fan/p/9348559.html -->
+    <div class="choudiv">
+        <ul id="outer">
+            <li class="zblock li1">0</li>
+            <li class="zblock li2">1</li>
+            <li class="zblock li3">2</li>
+            <li class="zblock li4">3</li>
+            <li class="zblock li5">4</li>
+            <li class="zblock li6">5</li>
+            <li class="zblock li7">6</li>
+            <li class="zblock li8">7</li>
+            <li class="zblock li9">8</li>
+            <li class="zblock li10">9</li>
+            <li class="zblock li11">10</li>
+            <li class="zblock li12">11</li>
+        </ul>
+        <div class="zblock1">开始</div>
+    </div>
+</body>
+
+</html>
